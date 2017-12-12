@@ -9,8 +9,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.reporters.Files;
 
-import com.testautomationguru.utility.PDFUtil;
-
 public class PDFUtilTest {
 
     PDFUtil pdfutil = new PDFUtil();
@@ -79,8 +77,8 @@ public class PDFUtilTest {
 
     @Test(priority = 8)
     public void comparePDFImageModeSame() throws IOException {
-        String file1 = getFilePath("image-compare-same/sample1.pdf");
-        String file2 = getFilePath("image-compare-same/sample2.pdf");
+        String file1 = getFilePath("image-compare-same/receipt_20171004R0399490389.pdf");
+        String file2 = getFilePath("image-compare-same/receipt_20171004R0399490389.pdf");
         pdfutil.setCompareMode(CompareMode.VISUAL_MODE);
 
         boolean result = pdfutil.compare(file1, file2);
@@ -90,17 +88,19 @@ public class PDFUtilTest {
     @Test(priority = 9)
     public void comparePDFImageModeDiff() throws IOException {
         pdfutil.highlightPdfDifference(true);
-        String file1 = getFilePath("image-compare-diff/sample1.pdf");
-        String file2 = getFilePath("image-compare-diff/sample2.pdf");
+        pdfutil.setImageDestinationPath("/Users/imagePath");
+        pdfutil.setCompareMode(CompareMode.VISUAL_MODE);
+        String file1 = getFilePath("image-compare-diff/Testdocument.pdf");
+        String file2 = getFilePath("image-compare-diff/Testdocument2.pdf");
         boolean result = pdfutil.compare(file1, file2);
-        Assert.assertFalse(result);
+        Assert.assertTrue(result);
     }
 
     @Test(priority = 10)
     public void comparePDFImageModeDiffSpecificPage() throws IOException {
         pdfutil.highlightPdfDifference(true);
-        String file1 = getFilePath("image-compare-diff/sample1.pdf");
-        String file2 = getFilePath("image-compare-diff/sample2.pdf");
+        String file1 = getFilePath("image-compare-diff/a.pdf");
+        String file2 = getFilePath("image-compare-diff/b.pdf");
         boolean result = pdfutil.compare(file1, file2, 3);
         Assert.assertTrue(result);
     }
